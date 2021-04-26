@@ -41,7 +41,9 @@ class PopularFragment : Fragment(), BaseViewHolder.onItemClickListener<Movie> {
 
     private fun setObservers() {
 
-        viewModel.fetchPopularMoviesList.observe(viewLifecycleOwner, observeMoviesList())
+        viewModel
+            .getPopularMovieList(getString(R.string.api_key))
+            .observe(viewLifecycleOwner, observeMoviesList())
 
     }
 

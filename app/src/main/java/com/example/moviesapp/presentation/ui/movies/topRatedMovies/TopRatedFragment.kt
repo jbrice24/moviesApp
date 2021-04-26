@@ -41,7 +41,9 @@ class TopRatedFragment : Fragment(), BaseViewHolder.onItemClickListener<Movie> {
 
     private fun setObservers() {
 
-        viewModel.fetchTopRatedMoviesList.observe(viewLifecycleOwner, observeMoviesList())
+        viewModel
+            .getTopRatedMovies(getString(R.string.api_key))
+            .observe(viewLifecycleOwner, observeMoviesList())
     }
 
     private fun observeMoviesList() : Observer<State<List<Movie>>> {

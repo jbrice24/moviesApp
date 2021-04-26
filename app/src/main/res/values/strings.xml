@@ -3,4 +3,5 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="api_key">2276cd1681047a01ba1b6426de8b7230</string>
 </resources>
