@@ -33,6 +33,11 @@ class PopularFragment : Fragment(), BaseViewHolder.onItemClickListener<Movie> {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         setObservers()
+        getMovieList()
+    }
+
+    private fun getMovieList() {
+        viewModel.getPopularMoviesRX(getString(R.string.api_key))
     }
 
     private fun initRecyclerView(){
@@ -41,11 +46,17 @@ class PopularFragment : Fragment(), BaseViewHolder.onItemClickListener<Movie> {
 
     private fun setObservers() {
 
-        viewModel
+        /*viewModel
             .getPopularMovieList(getString(R.string.api_key))
+            .observe(viewLifecycleOwner, observeMoviesList())*/
+
+        viewModel
+            .getPopularListState
             .observe(viewLifecycleOwner, observeMoviesList())
 
     }
+
+
 
     private fun observeMoviesList() : Observer<State<List<Movie>>>{
 
@@ -62,7 +73,7 @@ class PopularFragment : Fragment(), BaseViewHolder.onItemClickListener<Movie> {
 
                 is State.Failure -> {
                     pgMovies.visibility = View.GONE
-                    Toast.makeText(requireContext(), it.e.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), it.e, Toast.LENGTH_LONG).show()
                 }
             }
         }

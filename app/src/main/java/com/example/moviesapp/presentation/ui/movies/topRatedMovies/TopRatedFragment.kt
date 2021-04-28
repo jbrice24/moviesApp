@@ -61,7 +61,7 @@ class TopRatedFragment : Fragment(), BaseViewHolder.onItemClickListener<Movie> {
 
                 is State.Failure -> {
                     pgMovies.visibility = View.GONE
-                    Toast.makeText(requireContext(), it.e.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), it.e, Toast.LENGTH_LONG).show()
                 }
             }
         }

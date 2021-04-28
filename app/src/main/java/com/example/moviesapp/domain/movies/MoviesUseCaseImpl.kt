@@ -5,6 +5,7 @@ import com.example.moviesapp.base.State
 import com.example.moviesapp.data.local.mapper.MoviesMapper
 import com.example.moviesapp.data.model.remote.Movie
 import com.example.moviesapp.data.repository.remote.movies.MoviesRemoteRepository
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class MoviesUseCaseImpl @Inject constructor(
@@ -38,5 +39,26 @@ class MoviesUseCaseImpl @Inject constructor(
             mapper.mapMoviesToTopRatedMovies(response)
             State.Success(response)
         }
+    }
+
+    override fun getPopularMoviesRX(apiKey: String): Observable<List<Movie>> {
+
+        return mapper.getPopularMappedMoviesRX()
+            .concatMap { dbResponse ->
+                if(dbResponse.isEmpty())
+                    remoteRepository.getPopularMoviesRX(apiKey)
+                        .concatMap {
+                            mapper.mapMoviesToPopularMoviesRX(it)
+                            Observable.just(it)
+
+                        }
+                else
+                    Observable.just(dbResponse)
+            }
+
+    }
+
+    override fun getTopRatedMoviesRX(apiKey: String): Observable<List<Movie>> {
+        TODO("Not yet implemented")
     }
 }
